@@ -23,8 +23,8 @@ module.exports = {
             })
         } catch (error) {
             res.status(500).send({
-                code: 500,
-                error: "数据查询失败"
+                code: 400,
+                error: "没有找到对应的数据"
             })
         }
     },
