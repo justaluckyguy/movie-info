@@ -67,5 +67,28 @@ module.exports = {
                 error: "数据删除失败"
             })
         }
+    },
+    async login (req, res) {
+        try {
+            // 1. 先根据账号检索
+            const user = await User.findOne({
+                where: {
+                    email: req.body.email
+                }
+            })
+            if (user) {
+                // 2. 在对密码进行校验
+                let isValidPassword = user.comparePassword(req.body.password)
+                if (isValidPassword)
+                    res.send({
+                        user: user.toJSON()
+                    })
+            }
+        } catch (err) {
+            res.status(403).send({
+                code: 403,
+                error: "用户名或密码错误"
+            })
+        }
     }
 }
